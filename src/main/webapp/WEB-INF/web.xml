@@ -9,8 +9,36 @@
     <servlet>
         <servlet-name>loginServlet</servlet-name>
         <servlet-class>com.example.LoginServlet</servlet-class>
+        <init-param>
+            <param-name>jdbc-url</param-name>
+            <param-value>jdbc:derby://localhost:1527/db</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>dbdriver</param-name>
+            <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
+        </init-param>
     </servlet>
 
+   <context-param>
+       <param-name>adminPath</param-name>
+       <param-value>www.google.com</param-value>
+   </context-param>
+
+
+    <servlet>
+        <servlet-name>CheckBalance</servlet-name>
+        <servlet-class>com.example.LoginServlet</servlet-class>
+        <init-param>
+            <param-name>jdbc-url</param-name>
+            <param-value>jdbc:derby://localhost:1527/db</param-value>
+        </init-param>
+
+        <init-param>
+            <param-name>dbdriver</param-name>
+            <param-value>org.apache.derby.jdbc.ClientDriver</param-value>
+        </init-param>
+    </servlet>
 
     <servlet-mapping>
         <servlet-name>loginServlet</servlet-name>
