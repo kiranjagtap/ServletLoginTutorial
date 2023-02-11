@@ -1,5 +1,8 @@
 package com.example;
 
+import com.example.dao.LoginRepository;
+import com.example.dao.LoginRepositoryImpl;
+
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -15,7 +18,9 @@ public class LoginServlet extends HttpServlet {
     private String jdbcUrl = null;
     private String dbDriver = null;
     private String adminPath = null;
-    private ServletContext servletContext= null;
+    private ServletContext servletContext = null;
+
+    LoginRepository loginRepository = null;
 
     public void init(ServletConfig config) throws ServletException {
         System.out.println("Servlet config initialized");
@@ -36,40 +41,38 @@ public class LoginServlet extends HttpServlet {
         jdbcUrl = config.getInitParameter("jdbc-url");
         dbDriver = config.getInitParameter("dbdriver");
 
-        System.out.println("Init Param::JDBC URL  -"+jdbcUrl);
-        System.out.println("Init Param::JDBC Driver  -"+dbDriver);
+        System.out.println("Init Param::JDBC URL  -" + jdbcUrl);
+        System.out.println("Init Param::JDBC Driver  -" + dbDriver);
 
 
         servletContext = request.getServletContext();
         adminPath = servletContext.getInitParameter("adminPath");
 
-        System.out.println("CONTEXT Param::adminPath  -"+adminPath);
+        System.out.println("CONTEXT Param::adminPath  -" + adminPath);
 
+        loginRepository = new LoginRepositoryImpl(jdbcUrl, dbDriver);
 
-        if(username!=null && username.equals("dummy")){
-            if(password!=null && password.equals("dummy")){
+        boolean isValid = loginRepository.doLogin(username, password);
+        if (isValid) {
+            PrintWriter out = response.getWriter();
+            out.println("<html>");
+            out.println("<head>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("Welcome " + username + " to dfirst Servlet login Tutorial");
+            out.println("</body>");
+            out.println("</html>");
 
-                PrintWriter out = response.getWriter();
-                out.println("<html>");
-                out.println("<head>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("Welcome "+username +" to dfirst Servlet login Tutorial");
-                out.println("</body>");
-                out.println("</html>");
+        } else {
+            PrintWriter out = response.getWriter();
+            out.println("<html>");
+            out.println("<head>");
+            out.println("</head>");
+            out.println("<body>");
+            out.println("<b> Invalid credentials, Please try again</b>");
+            out.println("</body>");
+            out.println("</html>");
 
-            }
-            else{
-                PrintWriter out = response.getWriter();
-                out.println("<html>");
-                out.println("<head>");
-                out.println("</head>");
-                out.println("<body>");
-                out.println("<b> Invalid credentials, Please try again</b>");
-                out.println("</body>");
-                out.println("</html>");
-
-            }
         }
 
     }
