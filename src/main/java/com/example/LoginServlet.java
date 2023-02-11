@@ -3,6 +3,7 @@ package com.example;
 import com.example.dao.LoginRepository;
 import com.example.dao.LoginRepositoryImpl;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
@@ -54,24 +55,22 @@ public class LoginServlet extends HttpServlet {
 
         boolean isValid = loginRepository.doLogin(username, password);
         if (isValid) {
-            PrintWriter out = response.getWriter();
-            out.println("<html>");
-            out.println("<head>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("Welcome " + username + " to dfirst Servlet login Tutorial");
-            out.println("</body>");
-            out.println("</html>");
-
+            request.setAttribute("username", username);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("welcome.jsp");
+            requestDispatcher.forward(request,response);
         } else {
-            PrintWriter out = response.getWriter();
+           /* PrintWriter out = response.getWriter();
             out.println("<html>");
             out.println("<head>");
             out.println("</head>");
             out.println("<body>");
             out.println("<b> Invalid credentials, Please try again</b>");
             out.println("</body>");
-            out.println("</html>");
+            out.println("</html>");*/
+
+            request.setAttribute("errorMessage", "Invalid credentials, Please try again !!");
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("index.jsp");
+            requestDispatcher.forward(request,response);
 
         }
 
