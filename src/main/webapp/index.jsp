@@ -6,7 +6,7 @@
 <html>
 <body>
 <h2>Login Form</h2>
-<b>${errorMessage}</b>
+<p><font color="red">${errorMessage}</font></p>
 <form action="/login.do" method="post">
 <label for="username">Enter Username</label>
 <br><br>
