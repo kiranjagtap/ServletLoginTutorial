@@ -5,5 +5,7 @@
 <html>
 <body>
 <h2>Welcome ${username}</h2>
+<a href="/category">Click here to go for Category</a>
+<a href="/category.jsp">Click here to go for Category jsp</a>
 </body>
 </html>

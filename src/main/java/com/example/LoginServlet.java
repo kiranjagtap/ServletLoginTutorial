@@ -10,6 +10,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -55,6 +56,11 @@ public class LoginServlet extends HttpServlet {
 
         boolean isValid = loginRepository.doLogin(username, password);
         if (isValid) {
+
+            HttpSession httpSession = request.getSession();
+
+            httpSession.setAttribute("user",username);
+
             request.setAttribute("username", username);
             RequestDispatcher requestDispatcher = request.getRequestDispatcher("welcome.jsp");
             requestDispatcher.forward(request,response);
